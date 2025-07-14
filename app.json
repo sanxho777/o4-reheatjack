@@ -10,7 +10,7 @@
       "android"
     ],
     "android": {
-      "package": "com.yourcompany.jacktrack",
+      "package": "com.jacktrack",
       "versionCode": 1,
       "permissions": [
         "ACCESS_FINE_LOCATION",
@@ -20,7 +20,7 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyDihUDy04TBAkFznSjN1_1B6LEGSnzx_cY"
+          "apiKey": "$GOOGLE_MAPS_API_KEY"
         }
       }
     }
