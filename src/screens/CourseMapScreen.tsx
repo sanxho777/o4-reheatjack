@@ -1,32 +1,35 @@
+// src/screens/CourseMapScreen.tsx
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import MapboxGL from '@rnmapbox/maps';
+import MapView, { Marker } from 'react-native-maps';
 import BleService from '../services/ble/BleService';
 
-MapboxGL.setAccessToken('<YOUR_MAPBOX_ACCESS_TOKEN>');
-
 export default function CourseMapScreen() {
-  const [userLocation, setUserLocation] = useState<[number,number]>([0,0]);
-  const [ballLocations, setBallLocations] = useState<[number,number][]>([]);
+  const [region, setRegion] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
+  const [ballLocations, setBallLocations] = useState<{ latitude: number; longitude: number }[]>([]);
 
   useEffect(() => {
-    BleService.startScan((coords) => {
-      setBallLocations((prev) => [...prev, coords]);
+    BleService.startScan(([lon, lat]) => {
+      setBallLocations((prev) => [...prev, { latitude: lat, longitude: lon }]);
     });
   }, []);
 
   return (
     <View style={styles.container}>
-      <MapboxGL.MapView style={styles.map}>
-        <MapboxGL.Camera zoomLevel={14} centerCoordinate={userLocation} />
+      <MapView style={styles.map} region={region} onRegionChangeComplete={setRegion}>
         {ballLocations.map((coord, idx) => (
-          <MapboxGL.PointAnnotation
-            key={idx.toString()}
-            id={`ball-${idx}`}
+          <Marker
+            key={idx}
             coordinate={coord}
+            title={`Ball ${idx + 1}`}
           />
         ))}
-      </MapboxGL.MapView>
+      </MapView>
     </View>
   );
 }
@@ -35,3 +38,4 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   map: { width: '100%', height: '100%' },
 });
+
