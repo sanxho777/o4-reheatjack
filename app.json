@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "JackTrack",
+    "slug": "jacktrack",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "platforms": [
+      "android"
+    ],
+    "android": {
+      "package": "com.yourcompany.jacktrack",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "BLUETOOTH_SCAN",
+        "BLUETOOTH_CONNECT",
+        "BLUETOOTH_ADVERTISE"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "<YOUR_GOOGLE_MAPS_API_KEY>"
+        }
+      }
+    }
+  }
+}
